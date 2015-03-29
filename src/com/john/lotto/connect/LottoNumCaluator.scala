@@ -38,7 +38,7 @@ object LottoNumCaluator {
     result
   }
 
-  def tupleSorting(list : ArrayBuffer[Tuple3[String, String, String]]):  Array[Tuple3[String, String, String]] = {
-    scala.util.Sorting.stableSort(list, (e1: Tuple3[String, String, String], e2: Tuple3[String, String, String]) => Integer.parseInt(e1._3) > Integer.parseInt(e2._3))
+  def tupleSorting(list : ArrayBuffer[Tuple3[String, String, String]]):  Array[Tuple2[String, String]] = {
+    scala.util.Sorting.stableSort(list, (e1: Tuple3[String, String, String], e2: Tuple3[String, String, String]) => Integer.parseInt(e1._3) > Integer.parseInt(e2._3)).map(a => (a._2, a._3))
   }
 }
