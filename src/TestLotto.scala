@@ -8,7 +8,7 @@ import scala.util.control.Breaks._
 /**
  * Created by Real on 2015-03-29.
  */
-object TestLotto extends App{
+object TestLotto extends App {
 
   val iter1 = LottoSiteConnector.getNumberIteration;
   val iter2 = LottoSiteConnector.getNumberIteration;
@@ -19,53 +19,69 @@ object TestLotto extends App{
   val result = LottoNumCaluator.tupleSorting(resultList)
   val rnd = new Random();
 
+  val returnValue : Int = Math.abs(System.currentTimeMillis().toInt)
 
-for(i <- 0 until 5) {
-  val indexList = ArrayBuffer[Int]()
-  breakable {
-    while(true) {
-      val idx = rnd.nextInt(12)
+  println(returnValue)
 
-      val value = Integer.parseInt(result(idx)._1)
+  val highNumberListCount = rnd.nextInt(2) + 1
+  val highNumberCount = rnd.nextInt(6) + 6
+  val lottoTotalListCount = 6
 
-      var flag = true;
-      for(i <- indexList) {
-        if(i equals value) flag = false;
+  println(highNumberListCount)
+  println(highNumberCount)
+
+  for (v <- 1 to returnValue) {
+
+    if (v equals returnValue) {
+      for (i <- 0 until 5) {
+        val indexList = ArrayBuffer[Int]()
+        breakable {
+          while (true) {
+            val idx = rnd.nextInt(highNumberCount)
+
+            val value = Integer.parseInt(result(idx)._1)
+
+            var flag = true;
+            for (i <- indexList) {
+              if (i equals value) flag = false;
+            }
+
+            if (flag) indexList += value
+
+            if (indexList.size == highNumberListCount) break
+          }
+        }
+
+        breakable {
+          while (true) {
+            val idx = rnd.nextInt(33) + highNumberCount
+
+            val value = Integer.parseInt(result(idx)._1)
+
+            var flag = true;
+            for (i <- indexList) {
+              if (i equals value) flag = false;
+            }
+
+            if (flag) indexList += value
+
+            if (indexList.size == lottoTotalListCount) break
+          }
+        }
+        val lottoResult = scala.util.Sorting.stableSort(indexList, (e1: Int, e2: Int) => e1 < e2)
+        println(lottoResult.mkString(" "))
       }
-
-      if(flag) indexList += value
-
-      if(indexList.size == 3) break
     }
-  }
 
-  breakable {
-    while(true) {
-      val idx = rnd.nextInt(33) + 12
 
-      val value = Integer.parseInt(result(idx)._1)
 
-      var flag = true;
-      for(i <- indexList) {
-        if(i equals value) flag = false;
-      }
+    // TODO: 당첨된 이력이 있는지 확인하고 없으면 보여줌
 
-      if(flag) indexList += value
-
-      if(indexList.size == 6) break
-    }
-  }
-  val lottoResult = scala.util.Sorting.stableSort(indexList, (e1: Int, e2:Int) => e1 < e2)
-  println(lottoResult.mkString(" "))
-
-  // TODO: 당첨된 이력이 있는지 확인하고 없으면 보여줌
-
-  /**
-   * - http://www.nlotto.co.kr/lotto645Confirm.do?method=allWin&nowPage=99
+    /**
+     * - http://www.nlotto.co.kr/lotto645Confirm.do?method=allWin&nowPage=99
       http://www.nlotto.co.kr/lotto645Stat.do?method=statByNumber
-   */
-}
-
+     */
+  }
 
 
 }
