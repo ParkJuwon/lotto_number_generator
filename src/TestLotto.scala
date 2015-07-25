@@ -23,8 +23,8 @@ object TestLotto extends App {
 
   println(returnValue)
 
-  val highNumberListCount = rnd.nextInt(2) + 1
-  val highNumberCount = rnd.nextInt(6) + 6
+  val highNumberListCount = rnd.nextInt(3) + 3
+  val highNumberCount = rnd.nextInt(8) + 6
   val lottoTotalListCount = 6
 
   println(highNumberListCount)
@@ -54,7 +54,7 @@ object TestLotto extends App {
 
         breakable {
           while (true) {
-            val idx = rnd.nextInt(33) + highNumberCount
+            val idx = rnd.nextInt(45-highNumberCount) + highNumberCount
 
             val value = Integer.parseInt(result(idx)._1)
 
